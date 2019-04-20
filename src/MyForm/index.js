@@ -1,28 +1,43 @@
 import React, { Component } from 'react';
 import * as styles from './styles.css';
 
+import { TextField, Label, Input, Message } from '@zendeskgarden/react-textfields';
+
 class MyForm extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			viewTitle: 'Customer Form',
-			firstName: { value: '', required: true, valid: false },
-			lastName: { value: '', required: true, valid: false },
-			address1: { value: '', required: true, valid: false },
-			address2: { value: '', required: true, valid: false },
-			city: { value: '', required: true, valid: false },
-			state: { value: '', required: true, valid: false },
-			zipCode: { value: '', required: true, valid: false },
-			email: { value: '', required: false, valid: false },
-			mailOrEmail: { value: '', required: false, valid: false },
-			confirmIsVisible: false
+			firstName: '',
+			lastName: '',
+			address1: '',
+			address2: '',
+			city: '',
+			state: '',
+			zipCode: '',
+			email: '',
+			mailOrEmail: '',
+			confirmIsVisible: false,
+			firstNameIsDirty: false,
 		}
 	}
 
+	// componentDidUpdate(prevProps, prevState) {
+	// 	const { firstName, firstNameIsDirty } = this.state;
+	// 	if (prevState.firstName === '' && prevState.firstNameIsDirty && firstName !== '' && firstNameIsDirty) {
+	// 		this.setState({ firstNameIsDirty });
+	// 	}
+	// }
+
 	handleOnInputChange = (event) => {
+		console.log(event.target.name);
+		console.log(event.target.value);
+
+
 		this.setState({
-			[event.target.name]: event.target.value
+			[event.target.name]: event.target.value,
+			formSubmitted: false
 		});
 	}
 
@@ -42,8 +57,32 @@ class MyForm extends Component {
 		});
 	}
 
+	inputsAreAllPopulated = () => {
+    console.log(`inputsAreAllPopulated()`);
+    let state = this.state;
+    let username = document.getElementById('first-name-input').value.replace(" ", "");
+
+    return (
+             state.firstName.replace(" ", "") && username
+           );
+  }
+
+	handleOnSubmit = () => {
+		if (this.inputsAreAllPopulated()) {
+			this.setState({
+				formSubmitted: true,
+				confirmIsVisible: true
+			});
+		} else {
+			this.setState({
+				formSubmitted: true
+			});
+		}
+	}
+
+
 	render() {
-		const { viewTitle, confirmIsVisible } = this.state;
+		const { firstName, viewTitle, confirmIsVisible, formSubmitted } = this.state;
 
 		return (
 		  <div id="MyForm" styles={styles}>
@@ -52,7 +91,20 @@ class MyForm extends Component {
 				</div>	  	
 	
 		  	<form action="">
-		  		
+					<TextField>
+						<Label>First Name</Label>
+						<Input id="first-name-input" name="firstName" value={firstName} onChange={this.handleOnInputChange} />
+						{formSubmitted && this.state.firstName === '' && 	
+						 <Message validation={'error'}>
+						 	First name is required.
+						 </Message>
+						}
+					</TextField>
+
+
+
+
+					<button type="button" onClick={this.handleOnSubmit}>Submit</button>
 		  	</form>
 
 			{confirmIsVisible && 
