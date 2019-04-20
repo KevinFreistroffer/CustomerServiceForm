@@ -24,7 +24,7 @@ class MyForm extends Component {
 			firstName: { value: "", isValid: false },
 			lastName: { value: "", isValid: false },
 			address1: { value: "", isValid: false },
-			address2: { value: "", isValid: false },
+			address2: { value: "", isValid: true },
 			city: { value: "", isValid: false },
 			state: { value: "", isValid: false },
 			zipCode: { value: "", isValid: false },
@@ -45,13 +45,14 @@ class MyForm extends Component {
 
 	handleOnInputChange = event => {
 		const isEmail = event.target.name === "email" ? true : false;
+		const isAddress2 = event.target.name === "address2" ? true : false;
 		let value = event.target.value;
 		let isValid = false;
 
 		if (value.trim() && value.trim() !== "") {
 			value = event.target.value.trim();
 			isValid = isEmail ? this.isValidEmail(value) : true;
-		} else if (isEmail) {
+		} else if (isEmail || isAddress2) {
 			isValid = true;
 		}
 
@@ -117,7 +118,7 @@ class MyForm extends Component {
 				
 
 				// handle successful response
-			} catch (e) {
+			} catch (error) {
 				console.error(`An error occured sending a POST request to ${this.state.apiURL}`, error);
 			}
 		}
@@ -138,9 +139,6 @@ class MyForm extends Component {
 		let address1 = document
 			.getElementById("address1-input")
 			.value.replace(" ", "");
-		let address2 = document
-			.getElementById("address2-input")
-			.value.replace(" ", "");
 		let city = document.getElementById("city-input").value.replace(" ", "");
 		let myState = document.getElementById("state-input").value.replace(" ", "");
 		let zipCode = document
@@ -154,8 +152,6 @@ class MyForm extends Component {
 			lastName &&
 			state.address1.value.replace(" ", "") &&
 			address1 &&
-			state.address2.value.replace(" ", "") &&
-			address2 &&
 			state.city.value.replace(" ", "") &&
 			city &&
 			state.state.value.replace(" ", "") &&
