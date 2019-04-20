@@ -21,7 +21,7 @@ class MyForm extends Component {
 			city: { value: "", isValid: false},
 			state: { value: "", isValid: false},
 			zipCode: { value: "", isValid: false},
-			email: { value: "", isValid: false},
+			email: { value: "", isValid: true},
 			mailOrEmail: { value: "", isValid: false},
 			confirmIsVisible: false,
 			formSubmitted: false
@@ -35,19 +35,16 @@ class MyForm extends Component {
 	}
 
 	handleOnInputChange = event => {
+		const isEmail = event.target.name === 'email' ? true : false;
 		let value = event.target.value;
 		let isValid = false;
 
-		if (value.trim()) {
-			value = event.target.value.trim();
-			if (value !== '') {
-				if (event.target.name === 'email') {
-					isValid = isValidEmail(event.target.value);
-				} else {
-					isValid = true;
-				}
-			}
-		} 
+		if (value.trim() && value.trim() !== '') {
+				value = event.target.value.trim();
+				isValid = isEmail ? this.isValidEmail(value) : true;
+		} else if(isEmail) {
+			isValid = true;
+		}
 
 		this.setState({
 			[event.target.name]: Object.assign({}, this.state[event.target.name], { value: event.target.value, isValid })
@@ -80,7 +77,6 @@ class MyForm extends Component {
 		if (choice === "ok") {
 			// axios.post()
 		}
-
 		this.setState({
 			confirmIsVisible: false
 		});
@@ -114,7 +110,7 @@ class MyForm extends Component {
 	}
 
 	handleOnSubmit = () => {
-		if (this.inputsAreAllPopulated()) {
+		if (this.inputsAreAllPopulated() && this.state.email.isValid) {
 			this.setState({
 				formSubmitted: true,
 				confirmIsVisible: true
@@ -135,6 +131,7 @@ class MyForm extends Component {
 			city,
 			state,
 			zipCode,
+			email,
 			viewTitle,
 			confirmIsVisible,
 			formSubmitted
