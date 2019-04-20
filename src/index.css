@@ -1,14 +1,65 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html, body {
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+body {
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+	sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	transition: all 0.1s linear;
+}
+
+.flex {
+  display: flex !important; }
+
+.row {
+  flex-direction: row !important; }
+
+.column {
+  flex-direction: column !important; }
+
+.center-all {
+  justify-content: center;
+  align-items: center !important; } 
+
+.align-center {
+  align-items: center !important; }
+
+.align-start {
+  align-items: flex-start !important; }
+
+.align-end {
+  align-items: flex-end !important; }
+.align-stretch {
+  align-items: stretch !important;
+}
+.justify-start {
+  justify-content: flex-start !important; }
+
+.justify-end {
+  justify-content: flex-end !important; }
+
+.justify-center {
+  justify-content: center !important; }
+
+.space-around {
+  justify-content: space-around !important;
+}
+
+.space-between {
+  justify-content: space-between !important; }
+
+.wrap  {
+  flex-wrap: wrap !important;
 }

@@ -1,0 +1,34 @@
+#MyForm {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+/* Confirm Modal */
+#MyForm #confirm-modal {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.5);
+}
+
+#MyForm #confirm-modal--content {
+	width: 20rem;
+	height: 15rem;
+	background-color: #fff;
+	border-radius: 1rem;
+	padding: 2rem;
+}
+
+#MyForm #confirm-modal #confirm-modal--buttons {
+
+}
+
+#MyForm #confirm-modal #confirm-modal--buttons button {
+	
+}
+/* End of Confirm Modal */
