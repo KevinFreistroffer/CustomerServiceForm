@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@zendeskgarden/react-buttons": "^3.9.2",
     "@zendeskgarden/react-checkboxes": "^3.5.3",
     "@zendeskgarden/react-textfields": "^3.8.4",
     "@zendeskgarden/react-theming": "^3.2.1",
+    "axios": "^0.18.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "2.1.8",
