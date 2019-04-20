@@ -38,38 +38,32 @@ class MyForm extends Component {
 		let value = event.target.value;
 		let isValid = false;
 
-		// If there are characters
 		if (value.trim()) {
 			value = event.target.value.trim();
-			// Characters were entered
 			if (value !== '') {
-				isValid = true;
+				if (event.target.name === 'email') {
+					isValid = isValidEmail(event.target.value);
+				} else {
+					isValid = true;
+				}
 			}
-
-			// Otherwise just spaces were entered
 		} 
-    // Else it's an empty string
 
 		this.setState({
 			[event.target.name]: Object.assign({}, this.state[event.target.name], { value: event.target.value, isValid })
 		});
 	};
 
-	handleOnBlur(event) {
+	handleOnBlur = (event) => {
 		let value = event.target.value;
 		let isValid = false;
 
-		// If there are characters
 		if (value.trim()) {
 			value = event.target.value.trim();
-			// Characters were entered
 			if (value !== '') {
 				isValid = true;
 			}
-
-			// Otherwise just spaces were entered
 		} 
-    // Else it's an empty string
 
 		this.setState({
 			[event.target.name]: Object.assign({}, this.state[event.target.name], { value: this.state[event.target.name].value, isValid })
@@ -113,6 +107,11 @@ class MyForm extends Component {
 						state.zipCode.value.replace(" ", "") && zipCode
 					 );
 	};
+
+	isValidEmail = (email) => {
+		const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;		
+    return re.test(String(email).toLowerCase());
+	}
 
 	handleOnSubmit = () => {
 		if (this.inputsAreAllPopulated()) {
@@ -212,7 +211,7 @@ class MyForm extends Component {
 
 
 					{/* City, State and Zip */}
-					<div>
+					<div id="city-state-zip" className="flex center-all">
 						{/* City */}
 						<TextField>
 							<Label>City</Label>
@@ -258,7 +257,21 @@ class MyForm extends Component {
 					</div>
 					{/* End of City, State and Zip */}
 
-
+					
+					{/* Email */}
+					<TextField>
+						<Label>Email (Optional)</Label>
+						<Input
+							id="email-input"
+							name="email"
+							type="text"
+							value={email.value}
+							onChange={this.handleOnInputChange}
+						/>
+						{formSubmitted && !email.isValid && 
+							<Message validation={"error"}>Please enter a valid email.</Message>
+					  }
+					</TextField>
 
 
 					<button type="button" onClick={this.handleOnSubmit}>
