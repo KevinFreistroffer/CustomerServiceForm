@@ -118,6 +118,8 @@ class MyForm extends Component {
 				
 
 				// handle successful response
+				console.log(`Successful POST request`);
+				this.clearForm();
 			} catch (error) {
 				console.error(`An error occured sending a POST request to ${this.state.apiURL}`, error);
 			}
@@ -190,6 +192,24 @@ class MyForm extends Component {
 			sendToEmail: isUSMail ? false : event.target.value
 		});
 	};
+
+	clearForm = () => {
+		this.setState({
+			firstName: { value: "", isValid: false },
+			lastName: { value: "", isValid: false },
+			address1: { value: "", isValid: false },
+			address2: { value: "", isValid: true },
+			city: { value: "", isValid: false },
+			state: { value: "", isValid: false },
+			zipCode: { value: "", isValid: false },
+			email: { value: "", isValid: true },
+			mailOrEmail: { value: "", isValid: false },
+			sendToUSMail: false,
+			sendToEMail: false,
+			confirmIsVisible: false,
+			formSubmitted: false
+		})
+	}
 
 	render() {
 		const {
@@ -385,6 +405,9 @@ class MyForm extends Component {
 								>
 									Cancel
 								</Button>
+							</div>
+							<div id="confirm-modal--agreement">
+								<p>By pressing "Ok", I know that this is above & beyond our standard return policy. The customer’s situation warrants it.</p>
 							</div>
 						</div>
 					</div>
