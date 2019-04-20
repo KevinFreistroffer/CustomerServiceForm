@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import * as styles from "./styles.css";
 
+import axios from "axios";
 import {
 	TextField,
 	Label,
 	Input,
 	Message
 } from "@zendeskgarden/react-textfields";
-import { Checkbox, Label as CheckboxLabel } from '@zendeskgarden/react-checkboxes'; 
-import { Button } from '@zendeskgarden/react-buttons';
+import {
+	Checkbox,
+	Label as CheckboxLabel
+} from "@zendeskgarden/react-checkboxes";
+import { Button } from "@zendeskgarden/react-buttons";
 
 class MyForm extends Component {
 	constructor(props) {
@@ -16,15 +20,16 @@ class MyForm extends Component {
 
 		this.state = {
 			viewTitle: "Customer Form",
-			firstName: { value: "", isValid: false},
-			lastName: { value: "", isValid: false},
-			address1: { value: "", isValid: false},
-			address2: { value: "", isValid: false},
-			city: { value: "", isValid: false},
-			state: { value: "", isValid: false},
-			zipCode: { value: "", isValid: false},
-			email: { value: "", isValid: true},
-			mailOrEmail: { value: "", isValid: false},
+			apiURL: "https://hooks.zapier.com/hooks/catch/2764166/70rw5z/",
+			firstName: { value: "", isValid: false },
+			lastName: { value: "", isValid: false },
+			address1: { value: "", isValid: false },
+			address2: { value: "", isValid: false },
+			city: { value: "", isValid: false },
+			state: { value: "", isValid: false },
+			zipCode: { value: "", isValid: false },
+			email: { value: "", isValid: true },
+			mailOrEmail: { value: "", isValid: false },
 			sendToUSMail: false,
 			sendToEMail: false,
 			confirmIsVisible: false,
@@ -39,37 +44,43 @@ class MyForm extends Component {
 	}
 
 	handleOnInputChange = event => {
-		const isEmail = event.target.name === 'email' ? true : false;
+		const isEmail = event.target.name === "email" ? true : false;
 		let value = event.target.value;
 		let isValid = false;
 
-		if (value.trim() && value.trim() !== '') {
-				value = event.target.value.trim();
-				isValid = isEmail ? this.isValidEmail(value) : true;
-		} else if(isEmail) {
+		if (value.trim() && value.trim() !== "") {
+			value = event.target.value.trim();
+			isValid = isEmail ? this.isValidEmail(value) : true;
+		} else if (isEmail) {
 			isValid = true;
 		}
 
 		this.setState({
-			[event.target.name]: Object.assign({}, this.state[event.target.name], { value: event.target.value, isValid })
+			[event.target.name]: Object.assign({}, this.state[event.target.name], {
+				value: event.target.value,
+				isValid
+			})
 		});
 	};
 
-	handleOnBlur = (event) => {
+	handleOnBlur = event => {
 		let value = event.target.value;
 		let isValid = false;
 
 		if (value.trim()) {
 			value = event.target.value.trim();
-			if (value !== '') {
+			if (value !== "") {
 				isValid = true;
 			}
-		} 
+		}
 
 		this.setState({
-			[event.target.name]: Object.assign({}, this.state[event.target.name], { value: this.state[event.target.name].value, isValid })
+			[event.target.name]: Object.assign({}, this.state[event.target.name], {
+				value: this.state[event.target.name].value,
+				isValid
+			})
 		});
-	}
+	};
 
 	toggleConfirmationModal = isVisible => {
 		this.setState({
@@ -77,9 +88,49 @@ class MyForm extends Component {
 		});
 	};
 
-	handleConfirmChoice = choice => {
+	handleConfirmChoice = async choice => {
 		if (choice === "ok") {
 			// axios.post()
+			let headers = {
+				"Content-type": "application/json",
+				"Access-Control-Allow-Origin": "*"
+			};
+			let body = {
+				firstName: this.state.firstName,
+				lastName: this.state.lastName,
+				address1: this.state.address1,
+				address2: this.state.address2,
+				city: this.state.city,
+				state: this.state.state,
+				zipCode: this.state.zipCode,
+				email: this.state.email,
+				sendTo: this.state.sendToUSMail
+					? this.state.sendToUSMail
+					: this.state.sendToEmail
+			};
+
+			try {
+				const response = await axios.post(this.state.apiURL, {
+					headers: { "Content-type": "application/json" },
+					withCredentials: true,
+					data: { ...body }
+				});
+
+				console.log(response);
+
+				if (response.success) {
+					// Handle success
+					alert("success");
+				} else {
+					// Handle errors
+				}
+			} catch (error) {
+				// Handle errors
+				console.log(
+					`An error occured posting to apiURL: ${this.state.apiURL}`,
+					error
+				);
+			}
 		}
 		this.setState({
 			confirmIsVisible: false
@@ -89,32 +140,53 @@ class MyForm extends Component {
 	inputsAreAllPopulated = () => {
 		console.log(`inputsAreAllPopulated()`);
 		let state = this.state;
-		let firstName = document.getElementById("first-name-input").value.replace(" ", "");
-		let lastName = document.getElementById("last-name-input").value.replace(" ", "");
-		let address1 = document.getElementById("address1-input").value.replace(" ", "");
-		let address2 = document.getElementById("address2-input").value.replace(" ", "");
+		let firstName = document
+			.getElementById("first-name-input")
+			.value.replace(" ", "");
+		let lastName = document
+			.getElementById("last-name-input")
+			.value.replace(" ", "");
+		let address1 = document
+			.getElementById("address1-input")
+			.value.replace(" ", "");
+		let address2 = document
+			.getElementById("address2-input")
+			.value.replace(" ", "");
 		let city = document.getElementById("city-input").value.replace(" ", "");
 		let myState = document.getElementById("state-input").value.replace(" ", "");
-		let zipCode = document.getElementById("zip-code-input").value.replace(" ", "");
+		let zipCode = document
+			.getElementById("zip-code-input")
+			.value.replace(" ", "");
 
 		return (
-						state.firstName.value.replace(" ", "") && firstName &&
-						state.lastName.value.replace(" ", "") && lastName &&
-						state.address1.value.replace(" ", "") && address1 &&
-						state.address2.value.replace(" ", "") && address2 &&
-						state.city.value.replace(" ", "") && city &&
-						state.state.value.replace(" ", "") && myState &&
-						state.zipCode.value.replace(" ", "") && zipCode
-					 );
+			state.firstName.value.replace(" ", "") &&
+			firstName &&
+			state.lastName.value.replace(" ", "") &&
+			lastName &&
+			state.address1.value.replace(" ", "") &&
+			address1 &&
+			state.address2.value.replace(" ", "") &&
+			address2 &&
+			state.city.value.replace(" ", "") &&
+			city &&
+			state.state.value.replace(" ", "") &&
+			myState &&
+			state.zipCode.value.replace(" ", "") &&
+			zipCode
+		);
 	};
 
-	isValidEmail = (email) => {
-		const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;		
-    return re.test(String(email).toLowerCase());
-	}
+	isValidEmail = email => {
+		const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(String(email).toLowerCase());
+	};
 
 	handleOnSubmit = () => {
-		if (this.inputsAreAllPopulated() && this.state.email.isValid) {
+		if (
+			this.inputsAreAllPopulated() &&
+			this.state.email.isValid &&
+			(this.state.sendToUSMail || this.state.sendToEmail)
+		) {
 			this.setState({
 				formSubmitted: true,
 				confirmIsVisible: true
@@ -126,14 +198,13 @@ class MyForm extends Component {
 		}
 	};
 
-
-	handleOnChecked = (event) => {
-		const isUSMail = event.target.name === 'us-mail-checkbox' ? true : false;
+	handleOnChecked = event => {
+		const isUSMail = event.target.name === "us-mail-checkbox" ? true : false;
 		this.setState({
 			sendToUSMail: isUSMail ? event.target.value : false,
-			sendToEmail: isUSMail ? false: event.target.value 
+			sendToEmail: isUSMail ? false : event.target.value
 		});
-	}
+	};
 
 	render() {
 		const {
@@ -159,7 +230,6 @@ class MyForm extends Component {
 				</div>
 
 				<form action="">
-
 					{/* First and Last Name */}
 					<div className="first-and-last flex space-around align-center">
 						{/* First Name */}
@@ -171,9 +241,9 @@ class MyForm extends Component {
 								value={firstName.value}
 								onChange={this.handleOnInputChange}
 							/>
-							{formSubmitted && !firstName.isValid &&
+							{formSubmitted && !firstName.isValid && (
 								<Message validation={"error"}>First name is required.</Message>
-							}
+							)}
 						</TextField>
 
 						{/* Last Name */}
@@ -185,13 +255,12 @@ class MyForm extends Component {
 								value={lastName.value}
 								onChange={this.handleOnInputChange}
 							/>
-							{formSubmitted && !lastName.isValid && 
+							{formSubmitted && !lastName.isValid && (
 								<Message validation={"error"}>Last name is required.</Message>
-						  }
+							)}
 						</TextField>
-					</div> 
+					</div>
 					{/* End of First and Last name */}
-					
 
 					{/*  Address line 1 */}
 					<TextField>
@@ -202,9 +271,9 @@ class MyForm extends Component {
 							value={address1.value}
 							onChange={this.handleOnInputChange}
 						/>
-						{formSubmitted && !address1.isValid && 
+						{formSubmitted && !address1.isValid && (
 							<Message validation={"error"}>Address is required.</Message>
-					  }
+						)}
 					</TextField>
 
 					{/*  Address line 2 */}
@@ -216,11 +285,10 @@ class MyForm extends Component {
 							value={address2.value}
 							onChange={this.handleOnInputChange}
 						/>
-						{formSubmitted && !address2.isValid && 
+						{formSubmitted && !address2.isValid && (
 							<Message validation={"error"}>Address is required.</Message>
-					  }
+						)}
 					</TextField>
-
 
 					{/* City, State and Zip */}
 					<div id="city-state-zip" className="flex center-all">
@@ -233,9 +301,9 @@ class MyForm extends Component {
 								value={city.value}
 								onChange={this.handleOnInputChange}
 							/>
-							{formSubmitted && !city.isValid && 
+							{formSubmitted && !city.isValid && (
 								<Message validation={"error"}>City is required.</Message>
-						  }
+							)}
 						</TextField>
 
 						{/* State */}
@@ -247,9 +315,9 @@ class MyForm extends Component {
 								value={state.value}
 								onChange={this.handleOnInputChange}
 							/>
-							{formSubmitted && !state.isValid && 
+							{formSubmitted && !state.isValid && (
 								<Message validation={"error"}>State is required.</Message>
-						  }
+							)}
 						</TextField>
 
 						{/* Zipcode */}
@@ -262,14 +330,13 @@ class MyForm extends Component {
 								value={zipCode.value}
 								onChange={this.handleOnInputChange}
 							/>
-							{formSubmitted && !zipCode.isValid && 
+							{formSubmitted && !zipCode.isValid && (
 								<Message validation={"error"}>Zip Code is required.</Message>
-						  }
+							)}
 						</TextField>
 					</div>
 					{/* End of City, State and Zip */}
 
-					
 					{/* Email */}
 					<TextField>
 						<Label>Email (Optional)</Label>
@@ -280,9 +347,11 @@ class MyForm extends Component {
 							value={email.value}
 							onChange={this.handleOnInputChange}
 						/>
-						{formSubmitted && !email.isValid && 
-							<Message validation={"error"}>Please enter a valid email.</Message>
-					  }
+						{formSubmitted && !email.isValid && (
+							<Message validation={"error"}>
+								Please enter a valid email.
+							</Message>
+						)}
 					</TextField>
 
 					<div id="send-to" className="flex column space-around align-start">
@@ -302,11 +371,10 @@ class MyForm extends Component {
 						>
 							<CheckboxLabel>EMail</CheckboxLabel>
 						</Checkbox>
-					  {formSubmitted && (!sendToUSMail && !sendToEmail) &&
-							<Message validation={"error"}>Address is required.</Message>
-					  }
+						{formSubmitted && (!sendToUSMail && !sendToEmail) && (
+							<Message validation={"error"}>Please check your option.</Message>
+						)}
 					</div>
-
 
 					<Button type="button" onClick={this.handleOnSubmit}>
 						Submit
@@ -326,7 +394,10 @@ class MyForm extends Component {
 								<Button onClick={() => this.handleConfirmChoice("ok")}>
 									Ok
 								</Button>
-								<Button onClick={() => this.handleConfirmChoice("cancel")}>
+								<Button
+									primary
+									onClick={() => this.handleConfirmChoice("cancel")}
+								>
 									Cancel
 								</Button>
 							</div>
