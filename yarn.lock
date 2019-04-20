@@ -1184,6 +1184,15 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.1.tgz#5c85d662f76fa1d34575766c5dcd6615abcd30d8"
   integrity sha512-FZdkNBDqBRHKQ2MEbSC17xnPFOhZxeJ2YGSfr2BKf3sujG49Qe3bB+rGCwQfIaA7WHnGeGkSijX4FuBCdrzW/g==
 
+"@zendeskgarden/react-checkboxes@^3.5.3":
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/@zendeskgarden/react-checkboxes/-/react-checkboxes-3.5.3.tgz#a954bda111a0b68dd4b2716ce798768932bc54af"
+  integrity sha512-O1Z6tlynRGqqNrjMWTc8BoPXHM0uZ5sN+R55bpDaBxIODIs5o6mSr/cX10568ZZmC6nluvPu0jJRq0VyBKAsCw==
+  dependencies:
+    "@zendeskgarden/react-selection" "^4.6.2"
+    "@zendeskgarden/react-utilities" "^0.2.5"
+    classnames "^2.2.5"
+
 "@zendeskgarden/react-selection@^4.6.2":
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/@zendeskgarden/react-selection/-/react-selection-4.6.2.tgz#95c061ad147aee428a02eb9e3eea939a6d2cd1bd"
