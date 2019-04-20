@@ -230,13 +230,13 @@ class MyForm extends Component {
 
 		return (
 			<div id="MyForm" styles={styles}>
-				<div id="view--header">
+				<div className="view--header">
 					<h1>{viewTitle}</h1>
 				</div>
 
 				<form action="">
 					{/* First and Last Name */}
-					<div className="first-and-last flex space-around align-center">
+					<div className="first-and-last flex align-center">
 						{/* First Name */}
 						<TextField>
 							<Label>First Name</Label>
@@ -267,7 +267,7 @@ class MyForm extends Component {
 					</div>
 					{/* End of First and Last name */}
 
-					{/*  Address line 1 */}
+					{/* Address line 1 */}
 					<TextField>
 						<Label>Address line 1</Label>
 						<Input
@@ -281,9 +281,9 @@ class MyForm extends Component {
 						)}
 					</TextField>
 
-					{/*  Address line 2 */}
+					{/* Address line 2 */}
 					<TextField>
-						<Label>Address line 2</Label>
+						<Label>Address line 2 (Optional)</Label>
 						<Input
 							id="address2-input"
 							name="address2"
@@ -359,7 +359,7 @@ class MyForm extends Component {
 						)}
 					</TextField>
 
-					<div id="send-to" className="flex column space-around align-start">
+					<div id="send-to" className="flex row space-around align-center">
 						{/* US Mail or Email checkboxes */}
 						<Checkbox
 							name="us-mail-checkbox"
@@ -381,7 +381,7 @@ class MyForm extends Component {
 						)}
 					</div>
 
-					<Button type="button" onClick={this.handleOnSubmit}>
+					<Button id="submit-button" type="button" onClick={this.handleOnSubmit}>
 						Submit
 					</Button>
 				</form>
@@ -395,7 +395,7 @@ class MyForm extends Component {
 							<div id="confirm-modal--header">
 								<h1>Are you sure?</h1>
 							</div>
-							<div id="confirm-modal--buttons">
+							<div id="confirm-modal--buttons" className="flex space-around">
 								<Button onClick={() => this.handleConfirmChoice("ok")}>
 									Ok
 								</Button>

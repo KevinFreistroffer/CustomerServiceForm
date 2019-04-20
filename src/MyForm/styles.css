@@ -4,20 +4,47 @@
 	position: relative;
 }
 
+#MyForm .view--header {
+	display: block;
+	width: 100%;
+}
+
+#MyForm .view--header h1 {
+	text-align: center;
+}
+
 #MyForm form {
-	width: 30rem;
+	width: 37rem;
 	margin: 0 auto;
 	padding: 1rem;
 }
 
+#MyForm form .first-and-last [data-garden-id="textfields.text_group"] {
+	flex: 1; 
+}
+
 #MyForm form .first-and-last [data-garden-id="textfields.text_group"]:first-child {
-	margin-right: 5%;
+	margin-right: 2.5%;
 }
 
-#MyForm form #city-state-zip {
-	
+#MyForm form .first-and-last [data-garden-id="textfields.text_group"]:last-child {
+	margin-left: 2.5%;
 }
 
+#MyForm form #city-state-zip [data-garden-id="textfields.text_group"] {
+	margin: 0 1%;
+}
+
+#MyForm form #send-to {
+	width: 15rem;
+	margin: 0rem auto;
+}
+
+#MyForm form #submit-button {
+	display: block;
+	width: 15rem;
+	margin: 3rem auto 0;
+}
 
 /* Confirm Modal */
 #MyForm #confirm-modal {
@@ -40,10 +67,26 @@
 }
 
 #MyForm #confirm-modal #confirm-modal--buttons {
-
+	width: 16rem;
 }
 
 #MyForm #confirm-modal #confirm-modal--buttons button {
 	
 }
 /* End of Confirm Modal */
+
+
+[data-garden-id="textfields.text_group"] { 
+	height: 6.7rem; 
+	position: relative; 
+}
+[data-garden-id="textfields.message"] { 
+	display: flex; 
+	justify-content: flex-start; 
+	align-items: center; 
+	position: absolute; 
+	bottom: 0.4rem; 
+	left: 1rem; 
+	width: 100%; 
+	text-align: center; 
+}
