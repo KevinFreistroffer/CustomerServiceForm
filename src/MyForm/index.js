@@ -95,17 +95,22 @@ class MyForm extends Component {
 	inputsAreAllPopulated = () => {
 		console.log(`inputsAreAllPopulated()`);
 		let state = this.state;
-		let firstName = document
-			.getElementById("first-name-input") 
-			.value.replace(" ", "");
-
-		let lastName = document
-			.getElementById("last-name-input")
-			.value.replace(" ", "");
+		let firstName = document.getElementById("first-name-input").value.replace(" ", "");
+		let lastName = document.getElementById("last-name-input").value.replace(" ", "");
+		let address1 = document.getElementById("address1-input").value.replace(" ", "");
+		let address2 = document.getElementById("address2-input").value.replace(" ", "");
+		let city = document.getElementById("city-input").value.replace(" ", "");
+		let myState = document.getElementById("state-input").value.replace(" ", "");
+		let zipCode = document.getElementById("zip-code-input").value.replace(" ", "");
 
 		return (
 						state.firstName.value.replace(" ", "") && firstName &&
-						state.lastName.value.replace(" ", "") && lastName
+						state.lastName.value.replace(" ", "") && lastName &&
+						state.address1.value.replace(" ", "") && address1 &&
+						state.address2.value.replace(" ", "") && address2 &&
+						state.city.value.replace(" ", "") && city &&
+						state.state.value.replace(" ", "") && myState &&
+						state.zipCode.value.replace(" ", "") && zipCode
 					 );
 	};
 
@@ -126,6 +131,11 @@ class MyForm extends Component {
 		const {
 			firstName,
 			lastName,
+			address1,
+			address2,
+			city,
+			state,
+			zipCode,
 			viewTitle,
 			confirmIsVisible,
 			formSubmitted
@@ -138,6 +148,7 @@ class MyForm extends Component {
 				</div>
 
 				<form action="">
+
 					{/* First and Last Name */}
 					<div className="first-and-last flex space-around align-center">
 						{/* First Name */}
@@ -163,11 +174,92 @@ class MyForm extends Component {
 								value={lastName.value}
 								onChange={this.handleOnInputChange}
 							/>
-							{formSubmitted && !this.state.lastName.isValid && 
+							{formSubmitted && !lastName.isValid && 
 								<Message validation={"error"}>Last name is required.</Message>
 						  }
 						</TextField>
+					</div> 
+					{/* End of First and Last name */}
+					
+
+					{/*  Address line 1 */}
+					<TextField>
+						<Label>Address line 1</Label>
+						<Input
+							id="address1-input"
+							name="address1"
+							value={address1.value}
+							onChange={this.handleOnInputChange}
+						/>
+						{formSubmitted && !address1.isValid && 
+							<Message validation={"error"}>Address is required.</Message>
+					  }
+					</TextField>
+
+					{/*  Address line 2 */}
+					<TextField>
+						<Label>Address line 2</Label>
+						<Input
+							id="address2-input"
+							name="address2"
+							value={address2.value}
+							onChange={this.handleOnInputChange}
+						/>
+						{formSubmitted && !address2.isValid && 
+							<Message validation={"error"}>Address is required.</Message>
+					  }
+					</TextField>
+
+
+					{/* City, State and Zip */}
+					<div>
+						{/* City */}
+						<TextField>
+							<Label>City</Label>
+							<Input
+								id="city-input"
+								name="city"
+								value={city.value}
+								onChange={this.handleOnInputChange}
+							/>
+							{formSubmitted && !city.isValid && 
+								<Message validation={"error"}>City is required.</Message>
+						  }
+						</TextField>
+
+						{/* State */}
+						<TextField>
+							<Label>State</Label>
+							<Input
+								id="state-input"
+								name="state"
+								value={state.value}
+								onChange={this.handleOnInputChange}
+							/>
+							{formSubmitted && !state.isValid && 
+								<Message validation={"error"}>State is required.</Message>
+						  }
+						</TextField>
+
+						{/* Zipcode */}
+						<TextField>
+							<Label>Zip Code</Label>
+							<Input
+								id="zip-code-input"
+								name="zipCode"
+								type="number"
+								value={zipCode.value}
+								onChange={this.handleOnInputChange}
+							/>
+							{formSubmitted && !zipCode.isValid && 
+								<Message validation={"error"}>Zip Code is required.</Message>
+						  }
+						</TextField>
 					</div>
+					{/* End of City, State and Zip */}
+
+
+
 
 					<button type="button" onClick={this.handleOnSubmit}>
 						Submit
