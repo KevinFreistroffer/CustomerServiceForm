@@ -109,27 +109,16 @@ class MyForm extends Component {
 					: this.state.sendToEmail
 			};
 
+			// axios resulted in a CORS error
 			try {
-				const response = await axios.post(this.state.apiURL, {
-					headers: { "Content-type": "application/json" },
-					withCredentials: true,
-					data: { ...body }
-				});
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", this.state.apiURL);
+				xhr.send(JSON.stringify({...body}));
+				
 
-				console.log(response);
-
-				if (response.success) {
-					// Handle success
-					alert("success");
-				} else {
-					// Handle errors
-				}
-			} catch (error) {
-				// Handle errors
-				console.log(
-					`An error occured posting to apiURL: ${this.state.apiURL}`,
-					error
-				);
+				// handle successful response
+			} catch (e) {
+				console.error(`An error occured sending a POST request to ${this.state.apiURL}`, error);
 			}
 		}
 		this.setState({
