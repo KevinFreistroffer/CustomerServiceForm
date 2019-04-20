@@ -7,6 +7,7 @@ import {
 	Input,
 	Message
 } from "@zendeskgarden/react-textfields";
+import { Checkbox, Label as CheckboxLabel } from '@zendeskgarden/react-checkboxes';
 
 class MyForm extends Component {
 	constructor(props) {
@@ -23,6 +24,8 @@ class MyForm extends Component {
 			zipCode: { value: "", isValid: false},
 			email: { value: "", isValid: true},
 			mailOrEmail: { value: "", isValid: false},
+			sendToUSMail: false,
+			sendToEMail: false,
 			confirmIsVisible: false,
 			formSubmitted: false
 		};
@@ -121,6 +124,15 @@ class MyForm extends Component {
 			});
 		}
 	};
+
+
+	handleOnChecked(event) {
+		const isUSMail = event.target.name === 'us-mail-checkbox' ? true : false;
+		this.setState({
+			sendToUSMail: isUSMail ? event.target.value : false,
+			sendToEmail: isUSMail ? false: event.target.value 
+		});
+	}
 
 	render() {
 		const {
@@ -269,6 +281,23 @@ class MyForm extends Component {
 							<Message validation={"error"}>Please enter a valid email.</Message>
 					  }
 					</TextField>
+
+					{/* US Mail or Email checkboxes */}
+					<Checkbox
+						name="us-mail-checkbox"
+						checked={state.sendToUSMail.isChecked}
+						onChange={this.handleOnChecked}
+					>
+						<CheckboxLabel>U.S. Mail</CheckboxLabel>
+					</Checkbox>
+
+					<Checkbox
+						name="email-checkbox"
+						checked={state.sendToEmail.isChecked}
+						onChange={this.handleOnChecked}
+					>
+						<CheckboxLabel>EMail</CheckboxLabel>
+					</Checkbox>
 
 
 					<button type="button" onClick={this.handleOnSubmit}>
