@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '@zendeskgarden/react-textfields/dist/styles.css';
 import '@zendeskgarden/react-checkboxes/dist/styles.css';
+import '@zendeskgarden/react-buttons/dist/styles.css';
 import { ThemeProvider } from '@zendeskgarden/react-theming';
 import MyForm from './MyForm';
 

@@ -8,6 +8,7 @@ import {
 	Message
 } from "@zendeskgarden/react-textfields";
 import { Checkbox, Label as CheckboxLabel } from '@zendeskgarden/react-checkboxes'; 
+import { Button } from '@zendeskgarden/react-buttons';
 
 class MyForm extends Component {
 	constructor(props) {
@@ -307,9 +308,9 @@ class MyForm extends Component {
 					</div>
 
 
-					<button type="button" onClick={this.handleOnSubmit}>
+					<Button type="button" onClick={this.handleOnSubmit}>
 						Submit
-					</button>
+					</Button>
 				</form>
 
 				{confirmIsVisible && (
@@ -322,12 +323,12 @@ class MyForm extends Component {
 								<h1>Are you sure?</h1>
 							</div>
 							<div id="confirm-modal--buttons">
-								<button onClick={() => this.handleConfirmChoice("ok")}>
+								<Button onClick={() => this.handleConfirmChoice("ok")}>
 									Ok
-								</button>
-								<button onClick={() => this.handleConfirmChoice("cancel")}>
+								</Button>
+								<Button onClick={() => this.handleConfirmChoice("cancel")}>
 									Cancel
-								</button>
+								</Button>
 							</div>
 						</div>
 					</div>
