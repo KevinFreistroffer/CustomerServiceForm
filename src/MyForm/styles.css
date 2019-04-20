@@ -10,6 +10,9 @@
 	padding: 1rem;
 }
 
+#MyForm form .first-and-last [data-garden-id="textfields.text_group"] {
+	padding: 1rem;
+}
 
 
 /* Confirm Modal */
